@@ -2,16 +2,18 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"survival_rate": "00_loss_functions.ipynb",
-         "event_rate": "00_loss_functions.ipynb",
-         "event_time": "00_loss_functions.ipynb",
-         "log_survival_rate": "00_loss_functions.ipynb",
-         "log_event_rate": "00_loss_functions.ipynb",
-         "log_event_time": "00_loss_functions.ipynb",
-         "event_time_loss": "00_loss_functions.ipynb",
-         "event_rate_loss": "00_loss_functions.ipynb"}
+index = {"assert_correct_input_shape": "00_functions.ipynb",
+         "assert_correct_output_shape": "00_functions.ipynb",
+         "survival_rate": "00_functions.ipynb",
+         "event_rate": "00_functions.ipynb",
+         "event_time": "00_functions.ipynb",
+         "log_survival_rate": "00_functions.ipynb",
+         "log_event_rate": "00_functions.ipynb",
+         "log_event_time": "00_functions.ipynb",
+         "event_time_loss": "00_functions.ipynb",
+         "event_rate_loss": "00_functions.ipynb"}
 
-modules = ["loss_functions.py"]
+modules = ["functions.py"]
 
 doc_url = "https://collinprather.github.io/DRSA-PyTorch/drsa/"
 
