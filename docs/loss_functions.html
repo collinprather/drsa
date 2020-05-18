@@ -83,14 +83,17 @@ $$ S(t_l) = Pr(z &gt; t_l) = \sum_{j &gt; l}Pr(z\in V_j) $$
 </blockquote>
 <p>Given the predictied conditional hazard rate, this function estimates
 the survival rate.</p>
-<p>input:
-    h: torch.tensor, which is the predicted
-        conditional hazard rate, h, at each observed time step.
-        It is expected that h is of shape (batch size, 1, 1),
-        as this is most amenable to use in training neural nets
-        with pytorch.
-output:
-    s: torch.tensor, estimated survival rate at time t</p>
+<p>input:</p>
+<ul>
+<li>h: torch.tensor, which is the predicted conditional hazard rate, h, at each observed time step.<ul>
+<li>It is expected that <code>h.shape == (batch size, 1, 1)</code>, as this is most amenable to use in training neural nets with pytorch.</li>
+</ul>
+</li>
+</ul>
+<p>output:</p>
+<ul>
+<li>s: torch.tensor, estimated survival rate at time t. <code>s.shape == (batch_size, 1)</code></li>
+</ul>
 
 </div>
 
@@ -144,6 +147,48 @@ output:
 <div class="output_text output_subarea output_execute_result">
 <pre>tensor([[0.0117],
         [0.0506]], grad_fn=&lt;ProdBackward1&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Discrete-Survival-function">Discrete Survival function<a class="anchor-link" href="#Discrete-Survival-function"> </a></h3><p>Though it's given its own name is survival analysis, the survival function is simply calculated as $1 - \text{CDF}(z)$. In the discrete, empirical case, the survival function is estimated as follows (this is equation (1) in the paper).</p>
+<p>{% raw %}
+$$ S(t_l) = Pr(z &gt; t_l) = \sum_{j &gt; l}Pr(z\in V_j) $$
+{% endraw %}</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="event_rate" class="doc_header"><code>event_rate</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/loss_functions.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>event_rate</code>(<strong><code>ts</code></strong>)</p>
+</blockquote>
+<p>CDF of probabilities at each time step</p>
+
 </div>
 
 </div>

@@ -2,7 +2,8 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"survival_rate": "00_loss_functions.ipynb"}
+index = {"survival_rate": "00_loss_functions.ipynb",
+         "event_rate": "00_loss_functions.ipynb"}
 
 modules = ["loss_functions.py"]
 
