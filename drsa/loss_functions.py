@@ -3,10 +3,20 @@
 __all__ = ['survival_rate']
 
 # Cell
+import torch
+
+# Cell
 
 def survival_rate(h):
     """
     Given the predictied conditional hazard rate, this function estimates
     the survival rate.
+
+    input:
+        h: torch.tensor, which is the predicted
+            conditional hazard rate, h, at each observed time step
+    output:
+        s: torch.tensor, estimated survival rate at time t
     """
-    return torch.prod(1-ts, dim=1)
+    s = torch.prod(1-ts, dim=1)
+    return s

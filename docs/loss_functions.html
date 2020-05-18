@@ -42,7 +42,7 @@ description: "This module contains implementations of both <a href='https://arxi
 </li>
 <li><p>Let $t$ be the time that a given data point was observed.</p>
 </li>
-<li><p>For each observation, there exist $L$ time slices, ie, $0 &lt; t_1 &lt; t_2 &lt; \dots &lt; t_L$</p>
+<li><p>For each observation, there exist $L$ time slices, ie $0 &lt; t_1 &lt; t_2 &lt; \dots &lt; t_L$, at which we either observe the event (uncensored) or do not (censored).</p>
 </li>
 <li><p>Let $V_l = (t_{l-1}, t_l]$ be the set of all disjoint intervals with $l = 1, 2, \dots, L$.</p>
 </li>
@@ -79,10 +79,15 @@ $$ S(t_l) = Pr(z &gt; t_l) = \sum_{j &gt; l}Pr(z\in V_j) $$
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="survival_rate" class="doc_header"><code>survival_rate</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/loss_functions.py#L7" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>survival_rate</code>(<strong><code>h</code></strong>)</p>
+<h4 id="survival_rate" class="doc_header"><code>survival_rate</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/loss_functions.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>survival_rate</code>(<strong><code>h</code></strong>)</p>
 </blockquote>
 <p>Given the predictied conditional hazard rate, this function estimates
 the survival rate.</p>
+<p>input:
+    h: torch.tensor, which is the predicted
+        conditional hazard rate, h, at each observed time step
+output:
+    s: torch.tensor, estimated survival rate at time t</p>
 
 </div>
 
