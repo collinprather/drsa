@@ -14,9 +14,14 @@ def survival_rate(h):
 
     input:
         h: torch.tensor, which is the predicted
-            conditional hazard rate, h, at each observed time step
+            conditional hazard rate, h, at each observed time step.
+            It is expected that h is of shape (batch size, 1, 1),
+            as this is most amenable to use in training neural nets
+            with pytorch.
     output:
         s: torch.tensor, estimated survival rate at time t
     """
-    s = torch.prod(1-ts, dim=1)
+    if len(h.shape) != 3:
+        raise ValueError(f"h is of shape {h.shape}. It is expected that h is of shape (batch size, 1, 1), as this is most amenable to use in training neural nets with pytorch.")
+    s = (1-h).prod(dim=1)
     return s
