@@ -11,7 +11,7 @@ entries:
       url: /
     - output: web,pdf
       title: '`loss_functions`'
-      url: /core
+      url: /loss_functions
     output: web
     title: drsa
   output: web
