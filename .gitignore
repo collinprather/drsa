@@ -1,3 +1,6 @@
+# symlink to drsa
+notebooks/drsa
+
 *.bak
 .gitattributes
 .last_checked
