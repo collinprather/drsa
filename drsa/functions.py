@@ -129,7 +129,8 @@ def log_event_rate(h):
         - note: `w.shape == (batch_size, 1)`
     """
     assert_correct_input_shape(h)
-    w = event_rate(h).log()
+#     w = event_rate(h).log()                   # numerically unstable, darn probabilities
+    w = (1 - log_survival_rate(h).exp()).log()  # numerically stable
     return w
 
 # Cell
@@ -176,7 +177,7 @@ def event_time_loss(input, target=None):
         - Loss associated with how wrong each predicted probability was at each time step
     """
     assert_correct_input_shape(input)
-    evt_loss = -log_event_time(input).sum(dim=0).squeeze()
+    evt_loss = -log_event_time(input).mean(dim=0).squeeze()
     return evt_loss
 
 # Cell
@@ -200,5 +201,5 @@ def event_rate_loss(input, target=None):
         - Loss associated with how cumulative predicted probabilities differ from the ground truth labels.
     """
     assert_correct_input_shape(input)
-    evr_loss = -log_event_rate(input).sum(dim=0).squeeze()
+    evr_loss = -log_event_rate(input).mean(dim=0).squeeze()
     return evr_loss

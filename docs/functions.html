@@ -636,7 +636,7 @@ the log event rate.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="log_event_time" class="doc_header"><code>log_event_time</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/functions.py#L137" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>log_event_time</code>(<strong><code>h</code></strong>)</p>
+<h4 id="log_event_time" class="doc_header"><code>log_event_time</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/functions.py#L138" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>log_event_time</code>(<strong><code>h</code></strong>)</p>
 </blockquote>
 <p>Given the predicted conditional hazard rate, this function estimates
 the log probability that the event occurs at time t.</p>
@@ -742,7 +742,7 @@ the log probability that the event occurs at time t.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="event_time_loss" class="doc_header"><code>event_time_loss</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/functions.py#L160" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>event_time_loss</code>(<strong><code>input</code></strong>, <strong><code>target</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="event_time_loss" class="doc_header"><code>event_time_loss</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/functions.py#L161" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>event_time_loss</code>(<strong><code>input</code></strong>, <strong><code>target</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Loss function applied to uncensored data in order
 to optimize the PDF of the true event time, z</p>
@@ -801,7 +801,7 @@ to optimize the PDF of the true event time, z</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tensor(3.0342, grad_fn=&lt;NegBackward&gt;)</pre>
+<pre>tensor(1.5171, grad_fn=&lt;NegBackward&gt;)</pre>
 </div>
 
 </div>
@@ -836,7 +836,7 @@ to optimize the PDF of the true event time, z</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="event_rate_loss" class="doc_header"><code>event_rate_loss</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/functions.py#L184" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>event_rate_loss</code>(<strong><code>input</code></strong>, <strong><code>target</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="event_rate_loss" class="doc_header"><code>event_rate_loss</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/functions.py#L185" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>event_rate_loss</code>(<strong><code>input</code></strong>, <strong><code>target</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Loss function applied to uncensored data in order
 to optimize the CDF of the true event time, z</p>
@@ -895,7 +895,7 @@ to optimize the CDF of the true event time, z</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tensor(0.0638, grad_fn=&lt;NegBackward&gt;)</pre>
+<pre>tensor(0.0319, grad_fn=&lt;NegBackward&gt;)</pre>
 </div>
 
 </div>
