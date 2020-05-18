@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: '`loss_functions`'
+      title: loss_functions
       url: /loss_functions
     output: web
     title: drsa

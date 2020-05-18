@@ -1,12 +1,12 @@
 ---
 
-title: `loss_functions`
+title: loss_functions
 
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "This module contains implementations of the loss functions associated with uncensored data, as defined in the <a href='https://arxiv.org/pdf/1809.02403.pdf'>original DRSA paper</a>."
-description: "This module contains implementations of the loss functions associated with uncensored data, as defined in the <a href='https://arxiv.org/pdf/1809.02403.pdf'>original DRSA paper</a>."
+summary: "This module contains implementations of both <a href='https://arxiv.org/pdf/1809.02403.pdf'>traditional survival analysis functions](https://square.github.io/pysurvival/math.html), as well as the loss functions associated with uncensored data, as defined in the [original DRSA paper</a>."
+description: "This module contains implementations of both <a href='https://arxiv.org/pdf/1809.02403.pdf'>traditional survival analysis functions](https://square.github.io/pysurvival/math.html), as well as the loss functions associated with uncensored data, as defined in the [original DRSA paper</a>."
 ---
 <!--
 
@@ -29,114 +29,92 @@ description: "This module contains implementations of the loss functions associa
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As defined in the <a href="https://arxiv.org/pdf/1809.02403.pdf">DRSA paper</a></p>
+<h2 id="Survival-Analysis-Functions">Survival Analysis Functions<a class="anchor-link" href="#Survival-Analysis-Functions"> </a></h2><p>Following the notation used in the the <a href="https://arxiv.org/pdf/1809.02403.pdf">DRSA paper</a>, we define the following:</p>
 <ul>
-<li>Discrete event rate (empirical CDF):</li>
+<li><p>Let $z$ be the true occurrence time for the event of interest.</p>
+</li>
+<li><p>Let $t$ be the time that a given data point was observed.</p>
+</li>
+<li><p>For each observation, there exist $L$ time slices, ie, $0 &lt; t_1 &lt; t_2 &lt; \dots &lt; t_L$</p>
+</li>
+<li><p>Let $V_l = (t_{l-1}, t_l]$ be the set of all disjoint intervals with $l = 1, 2, \dots, L$.</p>
+</li>
 </ul>
-<p>{% raw %}
-$$ W(t_l) = Pr(z \leq t_l) = \sum_{j\leq l}Pr(z\in V_j) $$
-{% endraw %}</p>
-<ul>
-<li>Discrete Survival function:</li>
-</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Discrete-Survival-function">Discrete Survival function<a class="anchor-link" href="#Discrete-Survival-function"> </a></h3><p>Though given a unique name is survival analysis, the survival function is simply calculated as $1 - \text{CDF}(z)$. In the discrete, empirical case, the survival function is estimated as follows (this is equation (1) in the paper).</p>
 <p>{% raw %}
 $$ S(t_l) = Pr(z &gt; t_l) = \sum_{j &gt; l}Pr(z\in V_j) $$
 {% endraw %}</p>
-<ul>
-<li>Discrete event time probability function (empirical PDF):</li>
-</ul>
-<p>{% raw %}
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="survival_rate" class="doc_header"><code>survival_rate</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/loss_functions.py#L7" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>survival_rate</code>(<strong><code>h</code></strong>)</p>
+</blockquote>
+<p>Given the predictied conditional hazard rate, this function estimates
+the survival rate.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<!-- As defined in the [DRSA paper](https://arxiv.org/pdf/1809.02403.pdf)
+
+* Discrete event rate (empirical CDF):
+
+{% raw %}
+$$ W(t_l) = Pr(z \leq t_l) = \sum_{j\leq l}Pr(z\in V_j) $$
+{% endraw %}
+
+* Discrete Survival function:
+
+{% raw %}
+$$ S(t_l) = Pr(z > t_l) = \sum_{j > l}Pr(z\in V_j) $$
+{% endraw %}
+
+* Discrete event time probability function (empirical PDF):
+
+{% raw %}
 $$p_l = Pr(z\in V_t) = W(t_l) - W(t_{l-1}) = S(t_{l-1}) - S(t_{l})$$
-{% endraw %}</p>
-<ul>
-<li>Discrete conditional hazard rate:</li>
-</ul>
-<p>{% raw %}
-$$h_l = Pr(z\in V_l | z &gt; t_{l-1}) = \frac{Pr(z\in V_l)}{Pr(z&gt;t_{l-1})} = \frac{p_l}{S(t_{l-1})}$$
-{% endraw %}</p>
+{% endraw %}
 
+* Discrete conditional hazard rate:
+
+$$h_l = Pr(z\in V_l | z > t_{l-1}) = \frac{Pr(z\in V_l)}{Pr(z>t_{l-1})} = \frac{p_l}{S(t_{l-1})}$$ -->
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="survival_rate" class="doc_header"><code>survival_rate</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/loss_functions.py#L7" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>survival_rate</code>(<strong><code>ts</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="event_rate" class="doc_header"><code>event_rate</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/loss_functions.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>event_rate</code>(<strong><code>ts</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="event_time" class="doc_header"><code>event_time</code><a href="https://github.com/collinprather/drsa/tree/master/drsa/loss_functions.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>event_time</code>(<strong><code>ts</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -165,8 +143,8 @@ $$h_l = Pr(z\in V_l | z &gt; t_{l-1}) = \frac{Pr(z\in V_l)}{Pr(z&gt;t_{l-1})} = 
 <span class="n">ts</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">ts1</span><span class="p">,</span> <span class="n">ts2</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Survival rate:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">survival_rate</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Event rate:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">event_rate</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Event time:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">event_time</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># print(f&quot;Event rate:\n {event_rate(ts)}&quot;)</span>
+<span class="c1"># print(f&quot;Event time:\n {event_time(ts)}&quot;)</span>
 </pre></div>
 
     </div>
@@ -183,12 +161,6 @@ $$h_l = Pr(z\in V_l | z &gt; t_{l-1}) = \frac{Pr(z\in V_l)}{Pr(z&gt;t_{l-1})} = 
 Survival rate:
  tensor([[0.0117],
         [0.0506]], grad_fn=&lt;ProdBackward1&gt;)
-Event rate:
- tensor([[0.9883],
-        [0.9494]], grad_fn=&lt;RsubBackward1&gt;)
-Event time:
- tensor([[0.1056],
-        [0.4556]], grad_fn=&lt;MulBackward0&gt;)
 </pre>
 </div>
 </div>

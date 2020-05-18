@@ -2,13 +2,11 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"survival_rate": "00_loss_functions.ipynb",
-         "event_rate": "00_loss_functions.ipynb",
-         "event_time": "00_loss_functions.ipynb"}
+index = {"survival_rate": "00_loss_functions.ipynb"}
 
 modules = ["loss_functions.py"]
 
-doc_url = "https://collinprather.github.io/drsa/"
+doc_url = "https://collinprather.github.io/DRSA-PyTorch/drsa/"
 
 git_url = "https://github.com/collinprather/drsa/tree/master/"
 
