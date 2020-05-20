@@ -11,9 +11,11 @@ index = {"assert_correct_input_shape": "00_functions.ipynb",
          "log_event_rate": "00_functions.ipynb",
          "log_event_time": "00_functions.ipynb",
          "event_time_loss": "00_functions.ipynb",
-         "event_rate_loss": "00_functions.ipynb"}
+         "event_rate_loss": "00_functions.ipynb",
+         "DRSA": "01_model.ipynb"}
 
-modules = ["functions.py"]
+modules = ["functions.py",
+           "model.py"]
 
 doc_url = "https://collinprather.github.io/DRSA-PyTorch/drsa/"
 

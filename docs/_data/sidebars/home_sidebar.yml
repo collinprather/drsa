@@ -12,6 +12,9 @@ entries:
     - output: web,pdf
       title: Functions
       url: /functions
+    - output: web,pdf
+      title: Model
+      url: /model
     output: web
     title: drsa
   output: web
