@@ -50,7 +50,6 @@ class DRSA(nn.Module):
         self.n_features = n_features
         self.n_layers = n_layers
         self.hidden_dim = hidden_dim
-        self.team_emb_size = team_emb_size
 
         # embeddings
         self.embeddings = embeddings
