@@ -17,7 +17,7 @@ index = {"assert_correct_input_shape": "00_functions.ipynb",
 modules = ["functions.py",
            "model.py"]
 
-doc_url = "https://collinprather.github.io/DRSA-PyTorch/drsa/"
+doc_url = "https://collinprather.github.io/drsa/drsa/"
 
 git_url = "https://github.com/collinprather/drsa/tree/master/"
 

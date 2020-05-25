@@ -54,6 +54,7 @@ class DRSA(nn.Module):
         # embeddings
         self.embeddings = embeddings
 
+
         # model architecture
         self.lstm = nn.LSTM(
             sum([emb.embedding_dim for emb in self.embeddings])
@@ -68,11 +69,15 @@ class DRSA(nn.Module):
         self.linear_dropout = nn.Dropout(p=Linear_dropout)
         self.sigmoid = nn.Sigmoid()
 
+        # making sure all params get trained
+        self.params_to_train = nn.ModuleList(self.embeddings + [self.lstm, self.fc])
+
     def forward(self, X: torch.tensor):
         """
         input:
         * `X`
             - input features of shape (batch_size, sequence length, self.n_features)
+
         output:
         * `out`:
             - the DRSA model's predictions at each time step, for each observation in batch

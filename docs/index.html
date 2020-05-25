@@ -29,16 +29,185 @@ description: "This project features a PyTorch implementation of the <a href='htt
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Install">Install<a class="anchor-link" href="#Install"> </a></h2>
+<h2 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h2>
+<pre><code>$ pip install drsa</code></pre>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="How-to-use">How to use<a class="anchor-link" href="#How-to-use"> </a></h2>
+<h2 id="Usage">Usage<a class="anchor-link" href="#Usage"> </a></h2>
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">drsa.functions</span> <span class="kn">import</span> <span class="n">event_time_loss</span><span class="p">,</span> <span class="n">event_rate_loss</span>
+<span class="kn">from</span> <span class="nn">drsa.model</span> <span class="kn">import</span> <span class="n">DRSA</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># generating random data</span>
+<span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
+
+<span class="c1"># generating random embedding for each sequence</span>
+<span class="n">n_embeddings</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">embedding_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">n_embeddings</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+<span class="p">)</span>
+
+<span class="c1"># concatenating embeddings and features</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">embedding_idx</span><span class="p">,</span> <span class="n">data</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># instantiating embedding parameters</span>
+<span class="n">embedding_size</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_embeddings</span><span class="p">,</span> <span class="n">embedding_size</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># instantiating model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DRSA</span><span class="p">(</span>
+    <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>  <span class="c1"># +1 for the embeddings</span>
+    <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">n_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">embeddings</span><span class="o">=</span><span class="p">[</span><span class="n">embeddings</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># defining training loop</span>
+<span class="k">def</span> <span class="nf">training_loop</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># weighted average of survival analysis losses</span>
+        <span class="n">evt_loss</span> <span class="o">=</span> <span class="n">event_time_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+        <span class="n">evr_loss</span> <span class="o">=</span> <span class="n">event_rate_loss</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">evt_loss</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">evr_loss</span><span class="p">)</span>
+
+        <span class="c1"># updating parameters</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2"> - loss: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># running training loop</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+<span class="n">training_loop</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">101</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>epoch: 0 - loss: 12.9956
+epoch: 10 - loss: 12.8334
+epoch: 20 - loss: 12.6803
+epoch: 30 - loss: 12.5363
+epoch: 40 - loss: 12.4008
+epoch: 50 - loss: 12.2729
+epoch: 60 - loss: 12.1517
+epoch: 70 - loss: 12.0363
+epoch: 80 - loss: 11.9261
+epoch: 90 - loss: 11.8204
+epoch: 100 - loss: 11.7186
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
