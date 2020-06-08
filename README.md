@@ -1,6 +1,5 @@
 # Deep Recurrent Survival Analysis in PyTorch
-**[Documentation](https://github.com/collinprather/drsa)**
-> This project features a PyTorch implementation of the <a href='https://arxiv.org/pdf/1809.02403.pdf'>Deep Recurrent Survival Analysis</a> model that is intended for use on uncensored sequential data in which the event is known to occur at the last time step for each observation
+
 
 
 ## Installation
@@ -22,7 +21,13 @@ import torch.optim as optim
 ```python
 # generating random data
 batch_size, seq_len, n_features = (64, 25, 10)
-data = torch.randn(batch_size, seq_len, n_features)
+def data_gen(batch_size, seq_len, n_features):
+    samples = []
+    for _ in range(batch_size):
+        sample = torch.cat([torch.normal(mean=torch.arange(1., float(seq_len)+1)).unsqueeze(-1) for _ in range(n_features)], dim=-1)
+        samples.append(sample.unsqueeze(0))
+    return torch.cat(samples, dim=0)
+data = data_gen(batch_size, seq_len, n_features)
 
 # generating random embedding for each sequence
 n_embeddings = 10
@@ -67,25 +72,25 @@ def training_loop(X, optimizer, alpha, epochs):
         # updating parameters
         loss.backward()
         optimizer.step()
-        if epoch % 10 == 0:
+        if epoch % 100 == 0:
             print(f"epoch: {epoch} - loss: {round(loss.item(), 4)}")
 ```
 
 ```python
 # running training loop
 optimizer = optim.Adam(model.parameters())
-training_loop(X, optimizer, alpha=0.5, epochs=101)
+training_loop(X, optimizer, alpha=0.5, epochs=1001)
 ```
 
-    epoch: 0 - loss: 12.9956
-    epoch: 10 - loss: 12.8334
-    epoch: 20 - loss: 12.6803
-    epoch: 30 - loss: 12.5363
-    epoch: 40 - loss: 12.4008
-    epoch: 50 - loss: 12.2729
-    epoch: 60 - loss: 12.1517
-    epoch: 70 - loss: 12.0363
-    epoch: 80 - loss: 11.9261
-    epoch: 90 - loss: 11.8204
-    epoch: 100 - loss: 11.7186
+    epoch: 0 - loss: 12.485
+    epoch: 100 - loss: 10.0184
+    epoch: 200 - loss: 6.5471
+    epoch: 300 - loss: 4.6741
+    epoch: 400 - loss: 3.9786
+    epoch: 500 - loss: 3.5133
+    epoch: 600 - loss: 3.1826
+    epoch: 700 - loss: 2.9421
+    epoch: 800 - loss: 2.7656
+    epoch: 900 - loss: 2.6355
+    epoch: 1000 - loss: 2.5397
 
