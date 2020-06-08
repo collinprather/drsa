@@ -29,6 +29,27 @@ sidebar: home_sidebar
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Documentation"><a href="https://collinprather.github.io/drsa/">Documentation</a><a class="anchor-link" href="#Documentation"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>This project features a PyTorch implementation of the <a href="https://arxiv.org/pdf/1809.02403.pdf">Deep Recurrent Survival Analysis</a> model that is intended for use on uncensored sequential data in which the event is known to occur at the last time step for each observation
+More specifically, this library is made up of two small modules.</p>
+</blockquote>
+<ol>
+<li><p><code>functions.py</code>, which contains utilities for computing conventional survival analysis quantities, given a <code>torch.Tensor</code> of predicted conditional hazard rates.</p>
+</li>
+<li><p><code>model.py</code>, which contains the <a href="/drsa/model#DRSA"><code>DRSA</code></a> class (a subclass of <code>torch.nn.Module</code>), and is easily extended to handle categorical embeddings, additional layers, or any other arbitrary PyTorch operations.</p>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h2>
 <pre><code>$ pip install drsa</code></pre>
 

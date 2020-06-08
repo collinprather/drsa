@@ -2,6 +2,15 @@
 
 
 
+#### [Documentation](https://collinprather.github.io/drsa/)
+
+> This project features a PyTorch implementation of the [Deep Recurrent Survival Analysis](https://arxiv.org/pdf/1809.02403.pdf) model that is intended for use on uncensored sequential data in which the event is known to occur at the last time step for each observation
+More specifically, this library is made up of two small modules.
+
+1. [`functions.py`](https://collinprather.github.io/drsa/functions/), which contains utilities for computing conventional survival analysis quantities, given a [`torch.Tensor`](https://pytorch.org/docs/stable/tensors.html) of predicted conditional hazard rates.
+
+2. [`model.py`](https://collinprather.github.io/drsa/model/), which contains the `DRSA` class (a subclass of [`torch.nn.Module`](https://pytorch.org/tutorials/beginner/examples_nn/two_layer_net_module.html)), and is easily extended to handle categorical embeddings, additional layers, or any other arbitrary PyTorch operations.
+
 ## Installation
 
 ```
