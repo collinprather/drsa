@@ -69,8 +69,8 @@ class DRSA(nn.Module):
         self.linear_dropout = nn.Dropout(p=Linear_dropout)
         self.sigmoid = nn.Sigmoid()
 
-        # making sure all params get trained
-        self.params_to_train = nn.ModuleList(self.embeddings + [self.lstm, self.fc])
+        # making sure embeddings get trained
+        self.params_to_train = nn.ModuleList(self.embeddings)
 
     def forward(self, X: torch.tensor):
         """
